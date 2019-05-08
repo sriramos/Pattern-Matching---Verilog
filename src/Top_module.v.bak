@@ -1,0 +1,14 @@
+module Top_module(clk, rst, Load, Shift, my_value);
+
+    input clk, rst;
+    input Load, Shift;
+    output[20:0] my_value;
+
+    wire Load_BS, Shift_BS;
+
+    ButtonShaper ButtonShaper_1(clk, rst, Load, Load_BS);
+    ButtonShaper ButtonShaper_2(clk, rst, Shift, Shift_BS);
+
+    Game_model_3 Game_model_3_1(clk, rst, Load_BS, Shift_BS, my_value);
+
+endmodule

@@ -1,0 +1,25 @@
+module authenticate_top_(clk,reset,in_toggle_userid,in_toggle_pswd,toggle_userid_out, toggle_pswd_out,userid_btn,pswd_btn,logout_btn,redled,greenled,authorise_bit);
+
+  input clk,reset,userid_btn, pswd_btn,logout_btn;
+  input [3:0]in_toggle_userid,in_toggle_pswd;
+
+  output authorise_bit, greenled, redled;
+  output [6:0] toggle_userid_out, toggle_pswd_out;
+
+  wire[3:0] internalid;
+  wire access_rom,push_button1,push_button2;
+  
+
+ rom_userid_top rom_userid_top1(clk, reset, in_toggle_userid,internalid, access_rom, push_button1,logout);
+
+rom_pswd_top rom_pswd_top1(clk, reset, in_toggle_pswd,internalid,access_rom,push_button2,logout,redled,greenled,authorise_bit); 
+
+
+buttonshaper button_userid(userid_btn,push_button1,clk,reset);
+buttonshaper button_pswd(pswd_btn,push_button2,clk,reset);
+buttonshaper button_login(logout_btn,logout,clk,reset);
+sevensegdec sevenseg_user(in_toggle_userid, toggle_userid_out);
+sevensegdec sevenseg_pswrd(in_toggle_pswd,toggle_pswd_out);
+ 
+endmodule
+
